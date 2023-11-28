@@ -4,7 +4,7 @@ import dtcCodigos from './dtcCodigos';
 
 const normalize = str => str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 
-const App = () => {
+const Apps = () => {
   const [search, setSearch] = useState('');
 
   const filteredItems = dtcCodigos.filter(item =>
@@ -34,4 +34,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default Apps;

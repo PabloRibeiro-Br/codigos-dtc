@@ -1,17 +1,37 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+// @Page.js
+import React, { useState } from 'react';
+import dtcCodigos from './dtcCodigos';
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-);
+const normalize = str => str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+const App = () => {
+  const [search, setSearch] = useState('');
+
+  const filteredItems = dtcCodigos.filter(item =>
+    normalize(item.title.toLowerCase()).includes(normalize(search.toLowerCase()))
+  );
+
+  return (
+    <div>
+      <header>
+        <input
+          type="text"
+          placeholder="Search..."
+          value={search}
+          onChange={e => setSearch(e.target.value)}
+        />
+      </header>
+      <main>
+        {filteredItems.map(item => (
+          <div key={item.id}>
+            <h2>{item.title}</h2>
+            <p>{item.description}</p>
+            <p>{item.correction}</p>
+          </div>
+        ))}
+      </main>
+    </div>
+  );
+};
+
+export default App;
